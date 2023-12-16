@@ -32,6 +32,8 @@ default_values = {
     "intl_direction": "TRGR",
 }
 
+ss["call_data"] = ss.get("call_data", {})
+
 
 def call_code(help_d, key, just_body_params=False):
     req_params = help_d["required_body_params"]
@@ -76,7 +78,9 @@ with col1:
 with col2:
     st.link_button(
         "⚡️ EPİAŞ Şeffaflık",
-        ss["call_data"]["help"]["url"],
+        ss["call_data"]["help"]["url"]
+        if ss.get("call_data", False)
+        else "https://seffaflik.epias.com.tr/transparency/",
         type="secondary",
         use_container_width=True,
     )
