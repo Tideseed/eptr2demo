@@ -128,6 +128,6 @@ if ss.get("eptr2_call", None) is not None:
         except Exception as e:
             st.warning("Bu API için örnek çağırma yapılamadı.")
 
-st.divider()
-st.subheader("Debug")
-st.json(ss)
+# st.divider()
+# st.subheader("Debug")
+# st.json(ss)
