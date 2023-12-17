@@ -23,7 +23,9 @@ ss["eptr"] = ss.get("eptr", EPTR2())
 default_values = {
     "start_date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
     "end_date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
-    "date_time": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%dT%H:00:00.000"),
+    "date_time": (datetime.now() - timedelta(days=1)).strftime(
+        "%Y-%m-%dT%H:00:00+03:00"
+    ),
     "period": (datetime.now() - timedelta(days=1)).replace(day=1).strftime("%Y-%m-%d"),
     "org_id": "294",
     "uevcb_id": "3205891",
@@ -65,6 +67,9 @@ eptr.call("{key}", {body_param_d})
 st.title("EPTR2 Demo")
 st.markdown(
     "[eptr2](https://www.pypi.org/project/eptr2) Python paketini kullanarak Şeffaflık 2.0 üzerinden istediğiniz API'yi aşağıdaki kodları kullanarak çağırabilirsiniz."
+)
+st.warning(
+    "Demo bütün APIler için örnek çağırma yapılamayabilir. İyileştirme çalışmalarımız devam etmektedir."
 )
 col1, col2, col3, col4 = st.columns([3, 3, 3, 3])
 
