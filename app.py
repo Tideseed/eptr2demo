@@ -19,6 +19,8 @@ d = get_help_d()
 d2 = {v["title"]["tr"]: {"key": k, **v} for k, v in d.items()}
 
 ss["eptr"] = ss.get("eptr", EPTR2())
+all_calls = ss["eptr"].get_available_calls()
+missing_calls = [k for k in all_calls if k not in d.keys()]
 
 default_values = {
     "start_date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
@@ -32,6 +34,7 @@ default_values = {
     "pp_id": "2800",  ## Real Time generation
     "year": "2021",
     "intl_direction": "TRGR",
+    "uevcb_name": "AFY",
 }
 
 ss["call_data"] = ss.get("call_data", {})
@@ -102,16 +105,35 @@ with col4:
         use_container_width=True,
     )
 
-st.selectbox("Veri seti seçin", list(d2.keys()), key="eptr2_call")
+st.selectbox("Veri seti seçin", list(d2.keys()) + missing_calls, key="eptr2_call")
 
 if ss.get("eptr2_call", None) is not None:
-    ss["call_data"] = get_call_help(d2[ss["eptr2_call"]]["key"])
-    st.subheader(ss["call_data"]["help"]["title"]["tr"])
-    st.markdown(ss["call_data"]["help"]["desc"]["tr"])
+    ss["call_data"] = get_call_help(
+        d2[ss["eptr2_call"]]["key"]
+        if d2.get(ss["eptr2_call"], None) is not None
+        else ss["eptr2_call"]
+    )
+    st.subheader(
+        ss["call_data"]["help"]["title"]["tr"]
+        if d2.get(ss["eptr2_call"], None) is not None
+        else "_(başlık yok)_"
+    )
+    st.markdown(
+        ss["call_data"]["help"]["desc"]["tr"]
+        if d2.get(ss["eptr2_call"], None) is not None
+        else "_(açıklama yok)_"
+    )
 
     st.subheader("Örnek Kullanım")
     st.code(
-        call_code(help_d=ss["call_data"], key=d2[ss["eptr2_call"]]["key"]),
+        call_code(
+            help_d=ss["call_data"],
+            key=(
+                d2[ss["eptr2_call"]]["key"]
+                if d2.get(ss["eptr2_call"], None) is not None
+                else ss["eptr2_call"]
+            ),
+        ),
         language="python",
     )
 
