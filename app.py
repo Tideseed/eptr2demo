@@ -90,13 +90,16 @@ with col1:
         use_container_width=True,
     )
 with col2:
+    try:
+        seffaflik_url = ss["call_data"]["help"].get(
+            "url", "https://seffaflik.epias.com.tr/transparency"
+        )
+    except:
+        seffaflik_url = "https://seffaflik.epias.com.tr/transparency"
+
     st.link_button(
         "⚡️ EPİAŞ Şeffaflık",
-        (
-            ss["call_data"]["help"]["url"]
-            if ss.get("call_data", False)
-            else "https://seffaflik.epias.com.tr/transparency/"
-        ),
+        url=seffaflik_url,
         type="secondary",
         use_container_width=True,
     )
