@@ -25,6 +25,8 @@ missing_calls = [k for k in all_calls if k not in d.keys()]
 default_values = {
     "start_date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
     "end_date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
+    "date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
+    "se_date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
     "date_time": (datetime.now() - timedelta(days=1)).strftime(
         "%Y-%m-%dT%H:00:00+03:00"
     ),
@@ -32,6 +34,7 @@ default_values = {
     "org_id": "294",
     "uevcb_id": "3205891",
     "pp_id": "2800",  ## Real Time generation
+    "idm_contract_id": "2066419679",  # PH23050120
     "year": "2021",
     "intl_direction": "TRGR",
     "uevcb_name": "AFY",
@@ -69,6 +72,9 @@ eptr.call("{key}", {body_param_d})
 
 st.title("EPTR2 Demo")
 st.markdown(
+    "![PyPI - Version](https://img.shields.io/pypi/v/eptr2) ![PyPI - Downloads](https://img.shields.io/pypi/dm/eptr2)"
+)
+st.markdown(
     "[eptr2](https://www.pypi.org/project/eptr2) Python paketini kullanarak Şeffaflık 2.0 üzerinden istediğiniz API'yi aşağıdaki kodları kullanarak çağırabilirsiniz."
 )
 st.warning(
@@ -86,9 +92,11 @@ with col1:
 with col2:
     st.link_button(
         "⚡️ EPİAŞ Şeffaflık",
-        ss["call_data"]["help"]["url"]
-        if ss.get("call_data", False)
-        else "https://seffaflik.epias.com.tr/transparency/",
+        (
+            ss["call_data"]["help"]["url"]
+            if ss.get("call_data", False)
+            else "https://seffaflik.epias.com.tr/transparency/"
+        ),
         type="secondary",
         use_container_width=True,
     )
