@@ -156,27 +156,19 @@ if ss.get("eptr2_call", None) is not None:
     get_result = st.button("API Sonucunu Getir")
 
     if get_result:
-        bod_params = call_code(
-            help_d=ss["call_data"],
-            key=d2[ss["eptr2_call"]]["key"],
-            just_body_params=True,
-        )
 
-        res = ss["eptr"].call(d2[ss["eptr2_call"]]["key"], **bod_params)
-        res_df = get_postprocess_function(keyval)(res=res, key=keyval)
-        st.dataframe(res_df)
-        # try:
-        #     bod_params = call_code(
-        #         help_d=ss["call_data"],
-        #         key=d2[ss["eptr2_call"]]["key"],
-        #         just_body_params=True,
-        #     )
+        try:
+            bod_params = call_code(
+                help_d=ss["call_data"],
+                key=d2[ss["eptr2_call"]]["key"],
+                just_body_params=True,
+            )
 
-        #     res = ss["eptr"].call(d2[ss["eptr2_call"]]["key"], **bod_params)
-        #     print(res)
-        #     st.dataframe(res)
-        # except Exception as e:
-        #     st.warning("Bu API için örnek çağırma yapılamadı.")
+            res = ss["eptr"].call(d2[ss["eptr2_call"]]["key"], **bod_params)
+            res_df = get_postprocess_function(keyval)(res=res, key=keyval)
+            st.dataframe(res_df)
+        except Exception as e:
+            st.warning("Bu API için örnek çağırma yapılamadı.")
 
 # st.divider()
 # st.subheader("Debug")
