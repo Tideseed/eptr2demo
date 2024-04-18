@@ -19,7 +19,7 @@ d = get_help_d()
 # x = get_call_help()
 d2 = {v["title"]["tr"]: {"key": k, **v} for k, v in d.items()}
 
-ss["eptr"] = ss.get("eptr", EPTR2())
+ss["eptr"] = ss.get("eptr", EPTR2(postprocess=False))
 all_calls = ss["eptr"].get_available_calls()
 missing_calls = [k for k in all_calls if k not in d.keys()]
 
@@ -137,14 +137,16 @@ if ss.get("eptr2_call", None) is not None:
     )
 
     st.subheader("Örnek Kullanım")
+
+    keyval = (
+        d2[ss["eptr2_call"]]["key"]
+        if d2.get(ss["eptr2_call"], None) is not None
+        else ss["eptr2_call"]
+    )
     st.code(
         call_code(
             help_d=ss["call_data"],
-            key=(
-                d2[ss["eptr2_call"]]["key"]
-                if d2.get(ss["eptr2_call"], None) is not None
-                else ss["eptr2_call"]
-            ),
+            key=keyval,
         ),
         language="python",
     )
@@ -161,8 +163,8 @@ if ss.get("eptr2_call", None) is not None:
         )
 
         res = ss["eptr"].call(d2[ss["eptr2_call"]]["key"], **bod_params)
-        print(res)
-        st.dataframe(res)
+        res_df = get_postprocess_function(keyval)(res=res, key=keyval)
+        st.dataframe(res_df)
         # try:
         #     bod_params = call_code(
         #         help_d=ss["call_data"],
