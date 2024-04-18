@@ -161,7 +161,7 @@ if ss.get("eptr2_call", None) is not None:
             )
 
             res = ss["eptr"].call(d2[ss["eptr2_call"]]["key"], **bod_params)
-
+            print(res)
             st.dataframe(res)
         except Exception as e:
             st.warning("Bu API için örnek çağırma yapılamadı.")
