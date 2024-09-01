@@ -19,7 +19,14 @@ d = get_help_d()
 # x = get_call_help()
 d2 = {v["title"]["tr"]: {"key": k, **v} for k, v in d.items()}
 
-ss["eptr"] = ss.get("eptr", EPTR2(postprocess=False))
+ss["eptr"] = ss.get(
+    "eptr",
+    EPTR2(
+        username=st.secrets["EPTR_USERNAME"],
+        password=st.secrets["EPTR_PASSWORD"],
+        postprocess=False,
+    ),
+)
 all_calls = ss["eptr"].get_available_calls()
 missing_calls = [k for k in all_calls if k not in d.keys()]
 
@@ -63,7 +70,7 @@ def call_code(help_d, key, just_body_params=False):
         return bod_params
 
     txt = f"""from eptr2 import EPTR2
-eptr = EPTR2()
+eptr = EPTR2(username="YOUR_EPTR_USERNAME", password="YOUR_EPTR_PASSWORD")
 
 eptr.call("{key}", {body_param_d})
 """
