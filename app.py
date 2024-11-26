@@ -4,6 +4,7 @@ from eptr2.mapping import get_call_help, get_help_d
 from datetime import datetime, timedelta
 from eptr2.mapping.processing import get_postprocess_function
 
+
 st.set_page_config(
     page_title="eptr2 Demo",
     page_icon="👩‍💻",
@@ -12,12 +13,24 @@ st.set_page_config(
     menu_items=None,
 )
 
+tra_map = {
+    "fm": {
+        "tr": "[eptr2](https://www.pypi.org/project/eptr2) Python paketini kullanarak Şeffaflık 2.0 üzerinden istediğiniz API'yi aşağıdaki kodları kullanarak çağırabilirsiniz.",
+        "en": "You can call any API on Transparency 2.0 using the [eptr2](https://www.pypi.org/project/eptr2) Python package with the following code.",
+    },
+    "fw": {
+        "tr": "Demo bütün APIler için örnek çağırma yapılamayabilir. İyileştirme çalışmalarımız devam etmektedir.",
+        "en": "A sample call may not be made for all APIs. Our improvement works continue.",
+    },
+}
+
 
 ss = st.session_state
+ss["lang"] = ss.get("lang", "tr")
 
 d = get_help_d()
 # x = get_call_help()
-d2 = {v["title"]["tr"]: {"key": k, **v} for k, v in d.items()}
+d2 = {v["title"][ss["lang"]]: {"key": k, **v} for k, v in d.items()}
 
 ss["eptr"] = ss.get(
     "eptr",
@@ -79,20 +92,24 @@ eptr.call("{key}", {body_param_d})
 
 
 st.title("EPTR2 Demo")
+if st.toggle("🇬🇧 English", value=False):
+    if ss["lang"] == "tr":
+        ss["lang"] = "en"
+        st.rerun()
+elif ss["lang"] == "en":
+    ss["lang"] = "tr"
+    st.rerun()
+
 st.markdown(
     "![PyPI - Version](https://img.shields.io/pypi/v/eptr2) ![PyPI - Downloads](https://img.shields.io/pypi/dm/eptr2)"
 )
-st.markdown(
-    "[eptr2](https://www.pypi.org/project/eptr2) Python paketini kullanarak Şeffaflık 2.0 üzerinden istediğiniz API'yi aşağıdaki kodları kullanarak çağırabilirsiniz."
-)
-st.warning(
-    "Demo bütün APIler için örnek çağırma yapılamayabilir. İyileştirme çalışmalarımız devam etmektedir."
-)
+st.markdown(tra_map["fm"][ss["lang"]])
+st.warning(tra_map["fw"][ss["lang"]])
 col1, col2, col3, col4 = st.columns([3, 3, 3, 3])
 
 with col1:
     st.link_button(
-        "✉️ İletişim",
+        "✉️ İletişim" if ss["lang"] == "tr" else "✉️ Contact",
         "https://robokami.com/#iletisim",
         type="primary",
         use_container_width=True,
@@ -106,7 +123,7 @@ with col2:
         seffaflik_url = "https://seffaflik.epias.com.tr/transparency"
 
     st.link_button(
-        "⚡️ EPİAŞ Şeffaflık",
+        "⚡️ EPİAŞ Şeffaflık" if ss["lang"] == "tr" else "⚡️ EPIAS TP",
         url=seffaflik_url,
         type="secondary",
         use_container_width=True,
@@ -124,7 +141,11 @@ with col4:
         use_container_width=True,
     )
 
-st.selectbox("Veri seti seçin", list(d2.keys()) + missing_calls, key="eptr2_call")
+st.selectbox(
+    "Veri seti seçin" if ss["lang"] == "tr" else "Choose a data set",
+    list(d2.keys()) + missing_calls,
+    key="eptr2_call",
+)
 
 if ss.get("eptr2_call", None) is not None:
     ss["call_data"] = get_call_help(
@@ -133,17 +154,17 @@ if ss.get("eptr2_call", None) is not None:
         else ss["eptr2_call"]
     )
     st.subheader(
-        ss["call_data"]["help"]["title"]["tr"]
+        ss["call_data"]["help"]["title"][ss["lang"]]
         if d2.get(ss["eptr2_call"], None) is not None
         else "_(başlık yok)_"
     )
     st.markdown(
-        ss["call_data"]["help"]["desc"]["tr"]
+        ss["call_data"]["help"]["desc"][ss["lang"]]
         if d2.get(ss["eptr2_call"], None) is not None
         else "_(açıklama yok)_"
     )
 
-    st.subheader("Örnek Kullanım")
+    st.subheader("Örnek Kullanım" if ss["lang"] == "tr" else "Example Usage")
 
     keyval = (
         d2[ss["eptr2_call"]]["key"]
@@ -158,9 +179,11 @@ if ss.get("eptr2_call", None) is not None:
         language="python",
     )
 
-    st.subheader("API Sonucu")
+    st.subheader("API Sonucu" if ss["lang"] == "tr" else "API Result")
 
-    get_result = st.button("API Sonucunu Getir")
+    get_result = st.button(
+        "API Sonucunu Getir" if ss["lang"] == "tr" else "Get API Result"
+    )
 
     if get_result:
 
