@@ -99,4 +99,7 @@ if __name__ == "__main__":
         menu_items=None,
     )
 
+    st.warning(
+        "Bu site dış bir platform olan [Streamlit Community Cloud](https://share.streamlit.io/) üzerinde çalışmaktadır ve sadece demo amaçlıdır. Erişim bilgilerinizi paylaşırken dikkatli olmanızı ve sık sık güncellemenizi tavsiye ederiz."
+    )
     composite_main()
