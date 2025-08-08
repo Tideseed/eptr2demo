@@ -1,2 +1,3 @@
-eptr2>=0.5.4
+eptr2>=1.1.2
 pandas>=2.1.3
+streamlit>=1.48.0
