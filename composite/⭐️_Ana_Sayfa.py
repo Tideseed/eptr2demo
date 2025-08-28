@@ -73,15 +73,37 @@ def composite_main():
 
     st.divider()
     st.page_link(
-        "pages/1_🔮_Pozisyonlar.py", label="**GİP İA GÖP Pozisyonları**", icon="🔮"
+        "pages/1_👩‍💻_Demo.py",
+        label="**EPTR2 Kullanım Demosu**",
+        icon="👩‍💻",
+    )
+    st.markdown(
+        """
+            Bu sayfa, eptr2 kütüphanesinin Python kodlarının nasıl kullanılabileceğini örnekleri ile gösterir."""
+    )
+    st.divider()
+    st.page_link(
+        "pages/2_🔮_Pozisyonlar.py",
+        label="**GİP İA GÖP Pozisyonları**",
+        icon="🔮",
     )
     st.markdown(
         """
             Bu sayfa, istediğiniz organizasyon ve istediğiniz dönem aralığı için GÖP, İA ve GİP pozisyonlarını bir arada çekmenizi sağlayan kompozit fonksiyonu çalıştırır."""
     )
-
-    st.markdown("Diğer kompozit fonksiyonlar da yakında burada...")
     st.divider()
+    st.page_link(
+        "pages/3_⚡️_Üretim_Planlama.py",
+        label="**Üretim Planlama**",
+        icon="⚡️",
+    )
+    st.markdown(
+        """
+            Bu sayfa, istediğiniz organizasyon, istediğiniz UEVÇB ve istediğiniz dönem aralığı için KGÜP ve KUDÜP verilerini bir arada çekmenizi sağlayan kompozit fonksiyonu çalıştırır."""
+    )
+
+    st.divider()
+    st.markdown("Diğer kompozit fonksiyonlar da yakında burada...")
 
 
 if __name__ == "__main__":
@@ -99,7 +121,4 @@ if __name__ == "__main__":
         menu_items=None,
     )
 
-    st.warning(
-        "Bu site dış bir platform olan [Streamlit Community Cloud](https://share.streamlit.io/) üzerinde çalışmaktadır ve sadece demo amaçlıdır. Erişim bilgilerinizi paylaşırken dikkatli olmanızı ve sık sık güncellemenizi tavsiye ederiz."
-    )
     composite_main()
